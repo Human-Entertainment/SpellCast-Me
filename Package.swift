@@ -15,9 +15,16 @@ let package = Package(
 		
 		// 🍃 Leaf view renderer for builting and rendering HTML pages.
 		.package(url: "https://github.com/vapor/leaf.git", from: "3.0.0"),
+		
+		// 🔒 Cryptography library for hashing passwords
+		.package(url: "https://github.com/vapor/crypto.git", from: "3.0.0")
     ],
     targets: [
-        .target(name: "App", dependencies: ["FluentPostgreSQL", "Vapor", "Authentication", "Leaf"]),
+        .target(name: "App", dependencies: ["FluentPostgreSQL",
+											"Vapor",
+											"Authentication",
+											"Leaf",
+											"Crypto"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"])
     ]

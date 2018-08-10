@@ -7,6 +7,9 @@ public func routes(_ router: Router) throws {
         return "Hello, world!"
     }
 	// Register the routes collection for creating and extracting Feeds
-	let feedController = FeedRoutes()
-	try router.register(collection: feedController)
+	//let feedController = FeedRoutes()
+	//try router.register(collection: feedController)
+	
+	let usersController = UsersController()
+	try router.register(collection: usersController)
 }

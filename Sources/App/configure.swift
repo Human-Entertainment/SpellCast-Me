@@ -5,14 +5,19 @@ import Leaf
 
 /// Called before your application initializes.
 public func configure(
+	
 	_ config: inout Config,
+	
 	_ env: inout Environment,
 	_ services: inout Services
 	) throws {
+	config.prefer(MemoryKeyedCache.self, for: KeyedCache.self)
+	
 	// register Authentication provider
 	try services.register(AuthenticationProvider())
 	try services.register(FluentPostgreSQLProvider())
 	try services.register(LeafProvider())
+	config.prefer(LeafRenderer.self, for: ViewRenderer.self)
 	
 	
 	let router = EngineRouter.default()
@@ -47,6 +52,7 @@ public func configure(
     var migrations = MigrationConfig()
     migrations.add(model: Channel.self, database: .psql)
 	migrations.add(model: Item.self, database: .psql)
+	migrations.add(model: User.self, database: .psql)
     services.register(migrations)
 	
 	var commandConfig = CommandConfig.default()

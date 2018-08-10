@@ -1,4 +1,4 @@
-import Foundation
+/*import Foundation
 import Vapor
 
 struct FeedRoutes: RouteCollection
@@ -101,3 +101,4 @@ struct EpiCreate: Content
 	var channelID: Int
 	var media: File
 }
+*/

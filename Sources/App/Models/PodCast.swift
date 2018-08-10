@@ -19,8 +19,10 @@ final class Channel: Codable {
 	var creator: String
 	/// The artwork used in the feed, maybe it should be a string?
 	var image: URL
+	/// The owner of the podcast
+	var userID: UUID
 	
-	init(title: String, link: URL, description: String, language: String, creator: String, date: Date, image: URL) {
+	init(title: String, link: URL, description: String, language: String, creator: String, date: Date, image: URL, userID: UUID) {
 		self.title = title
 		self.link = link
 		self.description = description
@@ -28,6 +30,7 @@ final class Channel: Codable {
 		self.creator = creator
 		self.date = date
 		self.image = image
+		self.userID = userID
 	}
 	
 }
@@ -41,6 +44,11 @@ extension Channel
 	var Items: Children<Channel, Item>
 	{
 		return children(\.channelID)
+	}
+	
+	var Users: Parent<Channel, User>
+	{
+		return parent(\.userID)
 	}
 }
 

@@ -28,9 +28,11 @@ final class Item: Codable {
 	}
 }
 
-extension Item: PostgreSQLModel{}
-extension Item: Content{}
-extension Item: Migration{}
+extension Item: PostgreSQLModel,
+				Content,
+				Migration{}
+//extension Item: Content{}
+//extension Item: Migration{}
 
 extension Item
 {
