@@ -34,3 +34,12 @@ extension User {
   }
 }
 
+struct ProfileContext: Encodable {
+	let user: User
+	let podcasts: Future<[Channel]>
+	
+	init(user: User, on conn: DatabaseConnectable) throws {
+		self.user = user
+		self.podcasts = try user.Podcasts.query(on: conn).all() // TODO: I don't know the syntax
+	}
+}

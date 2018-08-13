@@ -9,10 +9,15 @@ struct UsersController: RouteCollection {
 		let usersRoute = router.grouped("users")
 		usersRoute.get("register", use: renderRegister)
 		usersRoute.post("register", use: register)
+		usersRoute.get("logout", use: logout)
 		
 		usersRoute.get("login", use: renderLogin)
-		let authedSessionRouter = usersRoute.grouped(User.authSessionsMiddleware())
-		authedSessionRouter.post("login", use: login)
+		let authedSessionRoutes = usersRoute.grouped(User.authSessionsMiddleware())
+		authedSessionRoutes.post("login", use: login)
+		
+		let protectedRoutes = authedSessionRoutes.grouped(RedirectMiddleware<User>(path: "/users/login"))
+		protectedRoutes.get("profile", use: renderProfile)
+		
   	}
 	
 	func renderRegister(_ req: Request)
@@ -79,11 +84,25 @@ struct UsersController: RouteCollection {
 					guard let user = user
 						else
 					{
-						return req.redirect(to: "/login")
+						return req.redirect(to: "/users/login")
 					}
 					try req.authenticateSession(user)
-					return req.redirect(to: "/profile")
+					return req.redirect(to: "/users/profile")
 			}
 		}
+	}
+	
+	func renderProfile(_ req: Request)
+		throws -> Future<View>
+	{
+		let user = try req.requireAuthenticated(User.self)
+		let context = try ProfileContext(user: user, on: req)
+		return try req.view().render("profile",
+									 context)
+	}
+	
+	func logout(_ req: Request) throws -> Future<Response> {
+		try req.unauthenticateSession(User.self)
+		return Future.map(on: req) { return req.redirect(to: "/users/login") }
 	}
 }
