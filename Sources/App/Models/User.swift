@@ -9,8 +9,9 @@ final class User: Content
 	var author: String
 	var email: String
 	var password: String
-	init(email: String, password: String)
+	init(author: String, email: String, password: String)
 	{
+		self.author = author
 		self.email = email
 		self.password = password
 	}

@@ -117,7 +117,7 @@ struct UsersController: RouteCollection {
 	{
 		return try req
 			.content
-			.decode(User.self)
+			.decode(NewChannel.self)
 			.flatMap
 			{	channel in
 				let user = try req.requireAuthenticated(User.self)
@@ -131,7 +131,7 @@ struct UsersController: RouteCollection {
 				podcast.subtitle = channel.subtitle
 				podcast.image = channel.image
 				podcast.description = channel.description
-				
+				podcast.userID = user.id!
 				return podcast
 					.save(on: req)
 					.map
@@ -140,4 +140,15 @@ struct UsersController: RouteCollection {
 				}
 		}
 	}
+}
+
+struct NewChannel: Codable
+{
+	var title: String
+	var link: URL
+	var creator: String?
+	var type: String?
+	var subtitle: String
+	var image: URL
+	var description: String
 }

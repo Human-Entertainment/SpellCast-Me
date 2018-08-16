@@ -14,11 +14,7 @@ final class Channel: Codable {
 	/// Quick motto or something like that
 	var subtitle: String
 	/// Is it serial or episodic?
-	enum type: String
-	{
-		case serial
-		case episodic
-	}
+	var type: String
 	/// The date the podcast was created, nothing too fancy
 	var date: Date
 	/// What is the PodCast about?
@@ -32,7 +28,19 @@ final class Channel: Codable {
 	/// The owner of the podcast
 	var userID: UUID
 	
-	init(title: String, link: URL, description: String, language: String, creator: String, date: Date, image: URL, userID: UUID) {
+	init(title: String,
+		 link: URL,
+		 description: String,
+		 language: String,
+		 creator: String,
+		 date: Date,
+		 image: URL,
+		 userID: UUID,
+		 copyright: String,
+		 subtitle: String,
+		 type: String)
+	{
+		self.copyright = copyright
 		self.title = title
 		self.link = link
 		self.description = description
@@ -41,6 +49,8 @@ final class Channel: Codable {
 		self.date = date
 		self.image = image
 		self.userID = userID
+		self.subtitle = subtitle
+		self.type = type
 	}
 	
 }
