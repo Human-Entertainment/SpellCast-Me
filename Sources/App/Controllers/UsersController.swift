@@ -120,23 +120,37 @@ struct UsersController: RouteCollection {
 			.decode(NewChannel.self)
 			.flatMap
 			{	channel in
-				let user = try req.requireAuthenticated(User.self)
-				var podcast: Channel
-				podcast.title = channel.title
-				podcast.link = channel.link
-				podcast.language = "en-US"
-				podcast.creator = channel.creator ?? user.author
-				podcast.copyright = "&#8471; &amp; &#xA9; \(podcast.creator)"
-				podcast.type = channel.type ?? "episodic"
-				podcast.subtitle = channel.subtitle
-				podcast.image = channel.image
-				podcast.description = channel.description
-				podcast.userID = user.id!
-				return podcast
-					.save(on: req)
-					.map
-					{
-						return req.redirect(to: "/users/profile")
+				return Channel
+					.query(on: req)
+					.filter(\Channel.title == channel.title)
+					.first()
+					.flatMap
+					{	result in
+						if let _ = result
+						{
+							return Future.map(on: req)
+							{ //_ in
+								return req.redirect(to: "/users/profile")
+							}
+						}
+						let user = try req.requireAuthenticated(User.self)
+						var podcast: Channel
+						podcast.title = channel.title
+						podcast.link = channel.link
+						podcast.language = "en-US"
+						podcast.creator = channel.creator ?? user.author
+						podcast.copyright = "&#8471; &amp; &#xA9; \(podcast.creator)"
+						podcast.type = channel.type ?? "episodic"
+						podcast.subtitle = channel.subtitle
+						podcast.image = channel.image
+						podcast.description = channel.description
+						podcast.userID = user.id!
+						return podcast
+							.save(on: req)
+							.map
+							{
+								return req.redirect(to: "/users/profile")
+						}
 				}
 		}
 	}
