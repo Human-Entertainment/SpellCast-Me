@@ -9,6 +9,16 @@ final class Channel: Codable {
 	var title: String
 	/// Link to the podcast, not to the feed however, as this _shouldn't_ be necessessary
 	var link: URL
+	/// The Copyright
+	var copyright: String
+	/// Quick motto or something like that
+	var subtitle: String
+	/// Is it serial or episodic?
+	enum type: String
+	{
+		case serial
+		case episodic
+	}
 	/// The date the podcast was created, nothing too fancy
 	var date: Date
 	/// What is the PodCast about?

@@ -5,8 +5,10 @@ import Authentication  // added
 final class User: Content
 {
 	var id: UUID?
-	var email: String  // added
-	var password: String  // added
+	/// The podcast creators name - the CMS does not _yet_ support networks - Maybe ready for beta?
+	var author: String
+	var email: String
+	var password: String
 	init(email: String, password: String)
 	{
 		self.email = email

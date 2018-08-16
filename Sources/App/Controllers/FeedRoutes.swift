@@ -1,3 +1,4 @@
+/*
 import Foundation
 import Vapor
 
@@ -101,3 +102,4 @@ struct EpiCreate: Content
 	var channelID: Int
 	var media: File
 }
+*/

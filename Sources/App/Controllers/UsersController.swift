@@ -7,8 +7,10 @@ struct UsersController: RouteCollection {
 	func boot(router: Router) throws
 	{
 		let usersRoute = router.grouped("users")
+		
 		usersRoute.get("register", use: renderRegister)
 		usersRoute.post("register", use: register)
+		
 		usersRoute.get("logout", use: logout)
 		
 		usersRoute.get("login", use: renderLogin)
@@ -17,6 +19,8 @@ struct UsersController: RouteCollection {
 		
 		let protectedRoutes = authedSessionRoutes.grouped(RedirectMiddleware<User>(path: "/users/login"))
 		protectedRoutes.get("profile", use: renderProfile)
+		
+		protectedRoutes.post("newcast", use: newPodcast)
 		
   	}
 	
@@ -101,8 +105,39 @@ struct UsersController: RouteCollection {
 									 context)
 	}
 	
-	func logout(_ req: Request) throws -> Future<Response> {
+	func logout(_ req: Request)
+		throws -> Future<Response>
+	{
 		try req.unauthenticateSession(User.self)
 		return Future.map(on: req) { return req.redirect(to: "/users/login") }
+	}
+	
+	func newPodcast(_ req: Request)
+		throws -> Future<Response>
+	{
+		return try req
+			.content
+			.decode(User.self)
+			.flatMap
+			{	channel in
+				let user = try req.requireAuthenticated(User.self)
+				var podcast: Channel
+				podcast.title = channel.title
+				podcast.link = channel.link
+				podcast.language = "en-US"
+				podcast.creator = channel.creator ?? user.author
+				podcast.copyright = "&#8471; &amp; &#xA9; \(podcast.creator)"
+				podcast.type = channel.type ?? "episodic"
+				podcast.subtitle = channel.subtitle
+				podcast.image = channel.image
+				podcast.description = channel.description
+				
+				return podcast
+					.save(on: req)
+					.map
+					{
+						return req.redirect(to: "/users/profile")
+				}
+		}
 	}
 }
