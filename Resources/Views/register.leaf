@@ -14,10 +14,10 @@
 						<form action="/users/register" method="POST">
 							<div class="form-group">
 								<label for="name">Name</label>
-								<input type="text" name="author" class="for" id="author" />
+								<input type="text" name="author" class="form-control" id="author" />
 							</div>
 							<div class="form-group">
-								<label for="email">Email</label>
+								<label for="email">Email - This is public, so use a contact mail!</label>
 								<input type="email" name="email" class="form-control" id="email" />
 							</div>
 							<div class="form-group">

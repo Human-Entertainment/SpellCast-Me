@@ -2,7 +2,8 @@ import Foundation
 import Vapor
 import FluentPostgreSQL
 
-final class Channel: Codable {
+final class Channel: Codable
+{
 	/// Internal ID, used to identify when generating _a_ feed, as well as for uploading podcast episodes
 	var id: Int?
 	/// The title, not difficult
@@ -77,3 +78,15 @@ extension Channel
 }
 
 extension Channel: Content{}
+
+struct NewChannel: Codable
+{
+	var title: String
+	var link: URL
+	var creator: String?
+	var type: String?
+	var subtitle: String
+	var image: URL
+	var description: String
+	var explicit: String?
+}

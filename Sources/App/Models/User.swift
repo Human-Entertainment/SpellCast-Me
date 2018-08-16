@@ -46,3 +46,8 @@ struct ProfileContext: Encodable {
 		self.podcasts = try user.Podcasts.query(on: conn).all() // TODO: I don't know the syntax
 	}
 }
+
+struct LoginRequest: Decodable {
+	var email: String
+	var password: String
+}

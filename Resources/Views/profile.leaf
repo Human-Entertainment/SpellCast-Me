@@ -11,14 +11,32 @@
 				<div class="card">
 					<div class="card-body">
 						<h3 class="card-title">Profile</h3>
-						<p>Email: #(user.email)</p>
+						<p>Hi #(user.author)!</p>
 						
 						<p>You have #count(podcasts) podcasts</p>
 						#for(podcast in podcasts) {
 						
 							<p>#(podcast.title)</p>
 						}
+						<div class="card">
+							<div class="card-body">
+							<h3 class="panel-title">Login</h3>
 
+							<form action="/users/login" method="POST">
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="email" name="email" class="form-control" id="email" />
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input type="password" name="password" class="form-control" id="password" />
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-block btn-success" value="login" />
+								</div>
+							</form>
+							</div>
+						</div>
 						<a href="/users/logout" class="btn btn-block btn-danger">
 							logout
 						</a>

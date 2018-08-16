@@ -74,7 +74,7 @@ struct UsersController: RouteCollection {
 	{
 		return try req
 			.content
-			.decode(User.self)
+			.decode(LoginRequest.self)
 			.flatMap
 			{	user in
 				return User.authenticate(
@@ -173,16 +173,4 @@ struct UsersController: RouteCollection {
 				}
 		}
 	}
-}
-
-struct NewChannel: Codable
-{
-	var title: String
-	var link: URL
-	var creator: String?
-	var type: String?
-	var subtitle: String
-	var image: URL
-	var description: String
-	var explicit: String?
 }
