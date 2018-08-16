@@ -27,6 +27,8 @@ final class Channel: Codable {
 	var image: URL
 	/// The owner of the podcast
 	var userID: UUID
+	/// Is the podcast explicit? (Default is no in UserController file)
+	var explicit: String
 	
 	init(title: String,
 		 link: URL,
@@ -38,7 +40,8 @@ final class Channel: Codable {
 		 userID: UUID,
 		 copyright: String,
 		 subtitle: String,
-		 type: String)
+		 type: String,
+		 explicit: String)
 	{
 		self.copyright = copyright
 		self.title = title
@@ -51,6 +54,7 @@ final class Channel: Codable {
 		self.userID = userID
 		self.subtitle = subtitle
 		self.type = type
+		self.explicit = explicit
 	}
 	
 }

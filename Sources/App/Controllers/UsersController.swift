@@ -148,6 +148,7 @@ struct UsersController: RouteCollection {
 						let image = channel.image
 						let description = channel.description
 						let userID = user.id!
+						let explicit = channel.explicit ?? "clean"
 
 						return Channel(title: title,
 									   link: link,
@@ -159,7 +160,8 @@ struct UsersController: RouteCollection {
 									   userID: userID,
 									   copyright: copyright,
 									   subtitle: subtitle,
-									   type: type) //podcast //Commenting out code ftw!
+									   type: type,
+									   explicit: explicit)
 							.save(on: req)
 							.map
 							{	_ in
@@ -182,4 +184,5 @@ struct NewChannel: Codable
 	var subtitle: String
 	var image: URL
 	var description: String
+	var explicit: String?
 }
