@@ -9,7 +9,7 @@ final class Channel: Codable
 	/// The title, not difficult
 	var title: String
 	/// Link to the podcast, not to the feed however, as this _shouldn't_ be necessessary
-	var link: URL
+	var link: String
 	/// The Copyright
 	var copyright: String
 	/// Quick motto or something like that
@@ -25,19 +25,19 @@ final class Channel: Codable
 	/// Who made the podcast - this is actually pretty often the network, and as this CMS is made for networks as well as individuals, this has to be called _often_.
 	var creator: String
 	/// The artwork used in the feed, maybe it should be a string?
-	var image: URL
+	var image: String
 	/// The owner of the podcast
 	var userID: UUID
 	/// Is the podcast explicit? (Default is no in UserController file)
 	var explicit: String
 	
 	init(title: String,
-		 link: URL,
+		 link: String,
 		 description: String,
 		 language: String,
 		 creator: String,
 		 date: Date,
-		 image: URL,
+		 image: String,
 		 userID: UUID,
 		 copyright: String,
 		 subtitle: String,
@@ -82,11 +82,11 @@ extension Channel: Content{}
 struct NewChannel: Codable
 {
 	var title: String
-	var link: URL
+	var link: String
 	var creator: String?
 	var type: String?
 	var subtitle: String
-	var image: URL
+	var image: String
 	var description: String
 	var explicit: String?
 }
