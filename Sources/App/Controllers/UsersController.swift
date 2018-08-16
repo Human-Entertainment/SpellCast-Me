@@ -135,23 +135,31 @@ struct UsersController: RouteCollection {
 						}
 						
 						let user = try req.requireAuthenticated(User.self)
-						var podcast: Channel
-						podcast.title = channel.title
-						podcast.link = channel.link
-						podcast.language = "en-US"
-						podcast.creator = channel.creator ?? user.author
-						podcast.copyright = "&#8471; &amp; &#xA9; \(podcast.creator)"
-						podcast.type = channel.type ?? "episodic"
-						podcast.subtitle = channel.subtitle
-						podcast.image = channel.image
-						podcast.description = channel.description
-						podcast.userID = user.id!
-						return podcast
+						//var podcast
+
+						return Channel //podcast //Commenting out code ftw!
 							.save(on: req)
-							.map
-							{
-								return req.redirect(to: "/users/profile")
-						}
+							.flatMap
+							{	podcast in
+								
+								podcast.title = channel.title
+								podcast.link = channel.link
+								podcast.language = "en-US"
+								podcast.creator = channel.creator ?? user.author
+								podcast.copyright = "&#8471; &amp; &#xA9; \(podcast.creator)"
+								podcast.type = channel.type ?? "episodic"
+								podcast.subtitle = channel.subtitle
+								podcast.image = channel.image
+								podcast.description = channel.description
+								podcast.userID = user.id!
+								
+								
+								.map
+								{	_ in
+									return req.redirect(to: "/users/profile")
+								}
+							}
+						
 				}
 		}
 	}
