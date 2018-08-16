@@ -133,6 +133,7 @@ struct UsersController: RouteCollection {
 								return req.redirect(to: "/users/profile")
 							}
 						}
+						
 						let user = try req.requireAuthenticated(User.self)
 						var podcast: Channel
 						podcast.title = channel.title
