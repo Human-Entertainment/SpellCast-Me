@@ -141,7 +141,7 @@ struct UsersController: RouteCollection {
 						let link = channel.link
 						let language = "en-US"
 						let creator = channel.creator ?? user.author
-						let copyright = "&#8471; &amp; &#xA9; \(podcast.creator)"
+						let copyright = "&#8471; &amp; &#xA9; \(creator)"
 						let date = Date()
 						let type = channel.type ?? "episodic"
 						let subtitle = channel.subtitle
