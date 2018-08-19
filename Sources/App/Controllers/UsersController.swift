@@ -21,6 +21,7 @@ struct UsersController: RouteCollection {
 		protectedRoutes.get("profile", use: renderProfile)
 		
 		protectedRoutes.post("newcast", use: newPodcast)
+		//protectedRoutes.get("profile", Int.parameter, use: renderEpisodes)
 		
   	}
 	
@@ -164,13 +165,21 @@ struct UsersController: RouteCollection {
 									   explicit: explicit)
 							.save(on: req)
 							.map
-							{	_ in
+							{	result in
 								
-								return req.redirect(to: "/users/profile")
+								let redirectID = result.id!
+								
+								return req.redirect(to: "/users/profile/\(redirectID)")
 								
 							}
 						
 				}
 		}
+	}
+	
+	func renderEpisodes(_ req: Request)
+		throws -> Future<View>
+	{
+		return try req.view().render("login")
 	}
 }
