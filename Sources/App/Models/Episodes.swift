@@ -13,8 +13,19 @@ final class Item: Codable {
 	var pubDate: Date
 	var author: String?
 	var channelID: Int
+	var duration: String
+	var explicit: String
 	
-	init(title: String, link: String, enclosure: Enclosure, description: String, subject: String, pubDate: Date, author: String, channelID: Int)
+	init(title: String,
+		 link: String,
+		 enclosure: Enclosure,
+		 description: String,
+		 subject: String,
+		 pubDate: Date,
+		 author: String,
+		 channelID: Int,
+		 duration: String,
+		 explicit: String)
 	{
 		self.title = title
 		self.link = link
@@ -25,6 +36,8 @@ final class Item: Codable {
 		self.pubDate = pubDate
 		self.author = author
 		self.channelID = channelID
+		self.duration = duration
+		self.explicit = explicit
 	}
 }
 

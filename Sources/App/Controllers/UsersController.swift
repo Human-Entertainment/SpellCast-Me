@@ -21,7 +21,7 @@ struct UsersController: RouteCollection {
 		protectedRoutes.get("profile", use: renderProfile)
 		
 		protectedRoutes.post("newcast", use: newPodcast)
-		//protectedRoutes.get("profile", Int.parameter, use: renderEpisodes)
+		protectedRoutes.get("profile", Int.parameter, use: renderEpisodes)
 		
   	}
 	
@@ -180,6 +180,14 @@ struct UsersController: RouteCollection {
 	func renderEpisodes(_ req: Request)
 		throws -> Future<View>
 	{
-		return try req.view().render("login")
+		let podID = try req.parameters.next(Int.self)
+		return Item
+			.query(on: req)
+			.filter(\Item.channelID == podID)
+			.all()
+			.flatMap
+			{	episodes in
+				return try req.view().render("episodes", episodes)
+		}
 	}
 }
