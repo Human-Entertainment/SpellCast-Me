@@ -177,6 +177,25 @@ struct UsersController: RouteCollection {
 		}
 	}
 	
+    func newEpisode(_ req: Request)
+        throws -> Future<Response>
+    {
+        return try req
+            .content
+            .decode(EpisodeUploader.self)
+            .flatmap
+            {   episode in
+                return Item
+                    .query(on: req)
+                    .filter(\Item.id == episode.episode.id)
+                    .first()
+                    .flatMap
+                    {    result in
+                    }
+        }
+        
+    }
+    
 	func renderEpisodes(_ req: Request)
 		throws -> Future<View>
 	{
@@ -190,4 +209,10 @@ struct UsersController: RouteCollection {
 				return try req.view().render("episodes", episodes)
 		}
 	}
+}
+
+struct EpisodeUploader: Codable
+{
+    let episode: Item
+    let file: File
 }
