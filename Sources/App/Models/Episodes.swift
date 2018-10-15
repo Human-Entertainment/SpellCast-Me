@@ -14,7 +14,7 @@ final class Item: Codable {
 	var author: String?
 	var channelID: Int
 	var duration: String
-	var explicit: String
+	var explicit: String?
 	
 	init(title: String,
 		 link: String,
