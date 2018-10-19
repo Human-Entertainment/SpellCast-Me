@@ -2,12 +2,12 @@ import Foundation
 import Vapor
 import FluentPostgreSQL
 
-final class Item: Codable {
+final class Item<T: Codable>: Codable {
 	var id: Int?
 	var title: String
 	var link: String
 	var guid: String
-	var enclosure: Enclosure
+	var enclosure: T
 	var description: String
 	var subject: String?
 	var pubDate: Date

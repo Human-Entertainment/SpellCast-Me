@@ -182,12 +182,12 @@ struct UsersController: RouteCollection {
     {
         return try req
             .content
-            .decode(EpisodeUploader.self)
+            .decode(Item<File>.self)
             .flatMap
             {   episode in
-                return Item
+                return Item<Enclosure>
                     .query(on: req)
-                    .filter(\Item.id == episode.episode.id)
+                    .filter(\Item.id == episode.id)
                     .first()
                     .flatMap
                     {   result in
@@ -201,22 +201,22 @@ struct UsersController: RouteCollection {
                         
                         
                         //let id: Int?
-                        let title = episode.episode.title
-                        let link = episode.episode.link
+                        let title = episode.title
+                        let link = episode.link
                         //var guid = episode
                         let enclosureURL = "Some URL"
-                        let enclosureLength = episode.file.data.count.bitWidth
-                        let enclosureType = episode.file.ext
+                        let enclosureLength = episode.enclosure.data.count.bitWidth
+                        let enclosureType = episode.enclosure.ext
                         let enclosure = Enclosure(url: enclosureURL,
                                                   length: "\(enclosureLength)",
                                                   type: enclosureType!) //= episode.episode.enclosure
-                        let description = episode.episode.description
-                        let subject = episode.episode.subject ?? description
+                        let description = episode.description
+                        let subject = episode.subject ?? description
                         let pubDate = Date()
-                        let author = episode.episode.author
-                        let channelID = episode.episode.channelID
-                        let duration = episode.episode.duration
-                        let explicit = episode.episode.explicit ?? "false"
+                        let author = episode.author
+                        let channelID = episode.channelID
+                        let duration = episode.duration
+                        let explicit = episode.explicit ?? "false"
                         
                         return Item(title: title,
                                     link: link,
