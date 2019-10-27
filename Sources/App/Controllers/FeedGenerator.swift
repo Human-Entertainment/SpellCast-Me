@@ -5,7 +5,7 @@ struct FeedGenerator
 {
 	//public init() {}
 	
-	public func generateFeed(root: Channel, episode: [Item]) -> String
+    public func generateFeed(root: Channel, episode: [Item]) -> String
 	{
 		let rfc822DateFormatter = DateFormatter()
 		rfc822DateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"

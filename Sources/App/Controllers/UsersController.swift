@@ -182,10 +182,10 @@ struct UsersController: RouteCollection {
     {
         return try req
             .content
-            .decode(Item<File>.self)
+            .decode(EpisodeUploader.self)
             .flatMap
             {   episode in
-                return Item<Enclosure>
+                return Item
                     .query(on: req)
                     .filter(\Item.id == episode.id)
                     .first()
