@@ -115,11 +115,19 @@ struct FeedRoutes: RouteCollection
     {
         let feedRoutes = router.grouped("feed")
         //feedRoutes.get(use: getAll)
-        feedRoutes.get(String.parameter, ".rss", use: generateFeed)
+        feedRoutes.get(String.parameter,".rss", use: generateFeed)
     }
     
-    func generateFeed(_ req: Request) -> Future<Channel>
-    {   let channel = try! req.parameters.next(String.self)
-        return Channel.query(on: req).filter(\Channel.title == channel).first()
+    func generateFeed(_ req: Request) -> Future<String>
+    {   let channelName = try! req.parameters.next(String.self)
+        print("Hit")
+        return Channel.query(on: req).filter(\Channel.title == channelName).first().map{ item in
+            guard let channel = item else { throw Abort(.notFound)}
+            let encoder = XMLEncoder()
+            let xmlData = try encoder.encode(channel, withRootKey: "")
+            let xmlString = String.init(data: xmlData, encoding: .utf8)
+            guard let xml = xmlString else { throw Abort(.notFound)}
+            return xml
+        }
     }
 }

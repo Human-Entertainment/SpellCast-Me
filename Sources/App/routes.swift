@@ -11,5 +11,7 @@ public func routes(_ router: Router) throws {
 	//try router.register(collection: feedController)
 	
 	let usersController = UsersController()
+    let feedCollection = FeedRoutes()
 	try router.register(collection: usersController)
+    try router.register(collection: feedCollection)
 }
