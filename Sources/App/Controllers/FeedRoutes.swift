@@ -115,12 +115,11 @@ struct FeedRoutes: RouteCollection
     {
         let feedRoutes = router.grouped("feed")
         //feedRoutes.get(use: getAll)
-        feedRoutes.get(String.parameter,".rss", use: generateFeed)
+        feedRoutes.get(String.parameter,"feed.rss", use: generateFeed)
     }
     
     func generateFeed(_ req: Request) -> Future<String>
     {   let channelName = try! req.parameters.next(String.self)
-        print("Hit")
         return Channel.query(on: req).filter(\Channel.title == channelName).first().map{ item in
             guard let channel = item else { throw Abort(.notFound)}
             let encoder = XMLEncoder()
