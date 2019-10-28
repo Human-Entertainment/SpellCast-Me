@@ -6,7 +6,6 @@ let package = Package(
     dependencies: [
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
-
         // 🔵 Swift ORM (queries, models, relations, etc) built on SQLite 3.
         .package(url: "https://github.com/vapor/fluent-postgresql.git", from: "1.0.0"),
 		
@@ -17,14 +16,18 @@ let package = Package(
 		.package(url: "https://github.com/vapor/leaf.git", from: "3.0.0"),
 		
 		// 🔒 Cryptography library for hashing passwords
-		.package(url: "https://github.com/vapor/crypto.git", from: "3.0.0")
+		.package(url: "https://github.com/vapor/crypto.git", from: "3.0.0"),
+        
+        // 📝 XML decoder
+        .package(url: "https://github.com/MaxDesiatov/XMLCoder.git", from: "0.9.0")
     ],
     targets: [
         .target(name: "App", dependencies: ["FluentPostgreSQL",
 											"Vapor",
 											"Authentication",
 											"Leaf",
-											"Crypto"]),
+											"Crypto",
+                                            "XMLCoder"]),
         .target(name: "Run", dependencies: ["App"]),
         .testTarget(name: "AppTests", dependencies: ["App"])
     ]

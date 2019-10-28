@@ -103,3 +103,23 @@ struct EpiCreate: Content
 	var media: File
 }
 */
+
+import Vapor
+import FluentPostgreSQL
+import XMLCoder
+
+struct FeedRoutes: RouteCollection
+{
+    func boot(router: Router)
+        throws
+    {
+        let feedRoutes = router.grouped("feed")
+        //feedRoutes.get(use: getAll)
+        feedRoutes.get(String.parameter, ".rss", use: generateFeed)
+    }
+    
+    func generateFeed(_ req: Request) -> Future<Channel>
+    {   let channel = try! req.parameters.next(String.self)
+        return Channel.query(on: req).filter(\Channel.title == channel).first()
+    }
+}

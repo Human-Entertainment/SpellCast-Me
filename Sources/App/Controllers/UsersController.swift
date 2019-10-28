@@ -184,7 +184,9 @@ struct UsersController: RouteCollection {
             .content
             .decode(EpisodeUploader.self)
             .flatMap
-            {   episode in
+            {   episodeFile in
+                let file = episodeFile.file
+                let episode = episodeFile.episode
                 return Item
                     .query(on: req)
                     .filter(\Item.id == episode.id)
@@ -205,8 +207,8 @@ struct UsersController: RouteCollection {
                         let link = episode.link
                         //var guid = episode
                         let enclosureURL = "Some URL"
-                        let enclosureLength = episode.enclosure.data.count.bitWidth
-                        let enclosureType = episode.enclosure.ext
+                        let enclosureLength = file.data.count.bitWidth
+                        let enclosureType = file.ext
                         let enclosure = Enclosure(url: enclosureURL,
                                                   length: "\(enclosureLength)",
                                                   type: enclosureType!) //= episode.episode.enclosure
